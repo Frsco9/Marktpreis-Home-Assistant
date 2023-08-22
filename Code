@@ -1,0 +1,11 @@
+# Marktpreis entity
+multiscrape:
+  - name: HA scraper
+    resource: https://www.e-control.at/de/marktteilnehmer/oeko-energie/marktpreis
+    scan_interval: 86400
+    sensor:
+      - unique_id: energie_marktpreis
+        name: Energie Marktpreis
+        unit_of_measurement: EUR/kWh
+        select: ".journal-content-article > table:nth-child(9) > tbody:nth-child(1) > tr:nth-child(8) > td:nth-child(2)"
+        value_template: '{{ value | replace (",", "") | float(default=0.0) | int / 100000 | round(2) }}'
